@@ -12535,28 +12535,33 @@
     ]
   },
   "packageFolders": {
-    "/Users/osman/.nuget/packages/": {},
-    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\Mo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/osman/Desktop/Recruiter/Recruiter.csproj",
+      "projectUniqueName": "C:\\Users\\Mo\\Documents\\HBO\\Leerjaar 2\\OP4\\UIrecruiter-Project-7-8-\\Recruiter\\Recruiter.csproj",
       "projectName": "Recruiter",
-      "projectPath": "/Users/osman/Desktop/Recruiter/Recruiter.csproj",
-      "packagesPath": "/Users/osman/.nuget/packages/",
-      "outputPath": "/Users/osman/Desktop/Recruiter/obj/",
+      "projectPath": "C:\\Users\\Mo\\Documents\\HBO\\Leerjaar 2\\OP4\\UIrecruiter-Project-7-8-\\Recruiter\\Recruiter.csproj",
+      "packagesPath": "C:\\Users\\Mo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mo\\Documents\\HBO\\Leerjaar 2\\OP4\\UIrecruiter-Project-7-8-\\Recruiter\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/osman/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Mo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
