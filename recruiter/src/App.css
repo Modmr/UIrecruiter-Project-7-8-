@@ -1,7 +1,7 @@
 /* The navigation bar */
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: #2b303e;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     left: 0;
@@ -16,6 +16,7 @@
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    font-family: sans-serif;
 }
 
 /* Change background on mouse-over */
