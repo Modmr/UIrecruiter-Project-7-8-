@@ -101,9 +101,11 @@ while(conversation):
     # print("looks if shit works*@&*&#*@&#&*@#&*@#&")
     
     dataparameters = response["result"]["contexts"][0]["parameters"]
-    # print(dataparameters.get("college-degree"))
+    if conversation == False:
+        DataToVar(dataparameters)
+        break
+cprint("------End of Program------","red","black")
 
-DataToVar(dataparameters)
     
     
 
