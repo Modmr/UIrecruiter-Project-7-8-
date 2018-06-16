@@ -62,15 +62,21 @@ def DataToVar(Data):
     weaknesses = Data.get("weaknesses")
 
     print("name: ",given_name)
-    print(last_name)
-    print("degree: ",college_degree)
-    print(hours)
     print("age: ",age)
-    print(weaknesses)
+    print("traits positive: ",traits_positive)
+    print("traits neutral: ", traits_neutral)
+    print("traits negative: ",traits_negative)
+    print("college_degree: ",college_degree)
+    print("college_major: ",college_major)
+    print("carreer: ",carreer)
+    print("experience: ",experience)
+    print("strengths",strengths)
+    print("weaknesses: ",weaknesses)
+    print("hours: ",hours)
 
 
 def Endingmark(Inpt):
-    if Inpt == "stop" or Inpt == "break":
+    if Inpt == "extract" or Inpt == "Extract":
         return False
     elif Inpt == "no":
         return True
@@ -78,7 +84,7 @@ def Endingmark(Inpt):
         return True
     
 
-cprint("(To start extracting write 'break')","red","yellow")
+cprint("(To start extracting write 'Extract')","red","yellow")
 conversation = True
 while(conversation):
     request = client.text_request()
