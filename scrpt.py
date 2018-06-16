@@ -1,10 +1,19 @@
 import apiai
 import json
+from colorama import init, Fore, Back, Style
+init()
 
 
 access_token = "be72d4a27ad74a288cf3ba3d16fbdacc"
 client = apiai.ApiAI(access_token)
 # request = client.text_request()
+
+def cprint(msg, foreground = "black", background = "white"):
+    fground = foreground.upper()
+    bground = background.upper()
+    style = getattr(Fore, fground) + getattr(Back, bground)
+    print(style + msg + Style.RESET_ALL)
+
 
 
 given_name=""
@@ -21,29 +30,9 @@ strengths = [""]
 weaknesses = [""]
 hours = 0
 
-# A = ['"given-name": ','"last-name": ']
-def ExtractInfoString(Array,response):
 
-    times = int(len(Array)/2)
-    ExtractedInfo = ["", "", "","",""]
-    itemindex = 0
-    for x in range(1,times+1):
-        
-        index = response.find(Array[itemindex])
-        indexrefined = index + len(Array[itemindex])
-        index2 = response.find(Array[itemindex+1])
-        ExtractedInfo[x-1] = response[indexrefined:index2]
-        # print(Array[itemindex])    
 
-        itemindex += 2
-    return ExtractedInfo
-        
-def ExtractInfoInt():
-    pass
-
-def VarToReturn():
-    pass
-def DataToVar(response):
+def DataToVar(Data):
     global given_name
     global last_name
     global age
@@ -58,11 +47,27 @@ def DataToVar(response):
     global weaknesses
     global hours
 
-    A = ['"given-name": ','"position.original":','"last-name.original": ',',"weaknesses"','"college-degree":',',"strenghts":','"college-major":',',"college-degree":']
-    ExtractedStrings = ExtractInfoString(A,response)
-    for x in ExtractedStrings:
-        print(x)
-    # print("The requested string: ->>>>",ExtractedStrings[2], "<----")
+    given_name = Data.get("given-name")
+    last_name = Data.get("last-name")
+    college_degree = Data.get("college-degree")
+    college_major = Data.get("college-major")
+    carreer = Data.get("position")
+    age = Data.get("age.original")
+    # experience = 
+    hours = Data.get("hours")
+    traits_positive = Data.get("traits-positive")
+    traits_neutral = Data.get("traits-neutral")
+    traits_negative = Data.get("traits-negative")
+    strengths = Data.get("strengths")
+    weaknesses = Data.get("weaknesses")
+
+    print("name: ",given_name)
+    print(last_name)
+    print("degree: ",college_degree)
+    print(hours)
+    print("age: ",age)
+    print(weaknesses)
+
 
 def Endingmark(Inpt):
     if Inpt == "stop" or Inpt == "break":
@@ -73,23 +78,29 @@ def Endingmark(Inpt):
         return True
     
 
-
+cprint("(To start extracting write 'break')","red","yellow")
 conversation = True
 while(conversation):
     request = client.text_request()
     
-    Inpt = input("(To start extracting write 'break')\nEnter text here: ")
+    Inpt = input("Enter text here: ")
     conversation = Endingmark(Inpt)
 
     request.query = Inpt
     byte_response = request.getresponse().read()
     json_response = byte_response.decode('utf8').replace("'", '"') 
-    # response = json.loads(json_response)
-    print(json_response)
+    response = json.loads(json_response)
+    cprint(response["result"]["fulfillment"]["speech"],"green","black")
+    
+    # print("looks if shit works*@&*&#*@&#&*@#&*@#&")
+    
+    dataparameters = response["result"]["contexts"][0]["parameters"]
+    # print(dataparameters.get("college-degree"))
+
+DataToVar(dataparameters)
     
     
-print("looks if shit works*@&*&#*@&#&*@#&*@#&")
-DataToVar(json_response)
+
 
         
     
