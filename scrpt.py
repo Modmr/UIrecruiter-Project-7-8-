@@ -52,9 +52,9 @@ def DataToVar(Data):
     college_degree = Data.get("college-degree")
     college_major = Data.get("college-major")
     carreer = Data.get("position")
-    age = Data.get("age.original")
+    age = int(Data.get("age.original"))
     # experience = 
-    hours = Data.get("hours")
+    hours = int(Data.get("hours"))
     traits_positive = Data.get("traits-positive")
     traits_neutral = Data.get("traits-neutral")
     traits_negative = Data.get("traits-negative")
@@ -62,7 +62,7 @@ def DataToVar(Data):
     weaknesses = Data.get("weaknesses")
 
     print("name: ",given_name)
-    print("age: ",age)
+    print("age: {0} type: {1}".format(str(age),type(age)))
     print("traits positive: ",traits_positive)
     print("traits neutral: ", traits_neutral)
     print("traits negative: ",traits_negative)
@@ -72,7 +72,7 @@ def DataToVar(Data):
     print("experience: ",experience)
     print("strengths",strengths)
     print("weaknesses: ",weaknesses)
-    print("hours: ",hours)
+    print("hours: {0} type: {1}".format(str(hours),type(hours)))
 
 
 def Endingmark(Inpt):

@@ -1,0 +1,81 @@
+parameters": {
+          "experience.original": "6 years",
+          "strengths.original": "communication",
+          "traits-positive": [
+            "Witty"
+          ],
+          "experience": {
+            "date-period": "2018-06-16/2024-06-16",
+            "date-period.original": "6 years",
+            "date-period.object": {}
+          },
+          "college-major": "Computer Science",
+          "traits-positive.original": "witty",
+          "last-name.original": "",
+          "weaknesses": [
+            "Communication"
+          ],
+          "weaknesses.original": "communication",
+          "last-name": "",
+          "hours": "40",
+          "traits-negative": [
+            "Lazy"
+          ],
+          "traits-neutral": [],
+          "college-major.original": "computer science",
+          "age.original": "20",
+          "traits-neutral.original": "",
+          "given-name.original": "osman",
+          "traits-negative.original": "lazy",
+          "college-degree": "Bachelor",
+          "strengths": [
+            "Communication"
+          ],
+          "college-degree.original": "bachelor",
+          "position": "Software Engineer",
+          "given-name": "Osman",
+          "position.original": "software engineer",
+          "hours.original": "40",
+          "age": {
+            "amount": 20,
+            "unit": "year"
+          }
+        },
+        "lifespan": 91
+      },
+      {
+        "name": "step6-context",
+        "parameters": {
+          "hours": "40",
+          "hours.original": "40"
+        },
+        "lifespan": 98
+      },
+      {
+        "name": "step3-geteducation-followup",
+        "parameters": {
+          "experience.original": "6 years",
+          "hours": "40",
+          "strengths.original": "communication",
+          "college-major.original": "computer science",
+          "experience": {
+            "date-period": "2018-06-16/2024-06-16",
+            "date-period.original": "6 years",
+            "date-period.object": {}
+          },
+          "college-major": "Computer Science",
+          "college-degree": "Bachelor",
+          "strengths": [
+            "Communication"
+          ],
+          "weaknesses": [
+            "Communication"
+          ],
+          "college-degree.original": "bachelor",
+          "position": "Software Engineer",
+          "weaknesses.original": "communication",
+          "position.original": "software engineer",
+          "hours.original": "40"
+        },
+        "lifespan": 94
+      }
