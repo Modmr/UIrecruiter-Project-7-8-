@@ -1,14 +1,15 @@
+import threading
 import pyaudio
 import wave
 
 
-def record():
+def record(subject_input):
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 16000
     RECORD_SECONDS = 4
-    WAVE_OUTPUT_FILENAME = "./resources/subject_input.wav"
+    WAVE_OUTPUT_FILENAME = subject_input
 
     p = pyaudio.PyAudio()
 
@@ -18,16 +19,29 @@ def record():
                     input=True,
                     frames_per_buffer=CHUNK)
 
-    input("Press ENTER to start talking.")
-    print("* START RECORDING *")
+    def record_service(frames):
+        print("* START RECORDING *")
+
+        while recording:
+            data = stream.read(CHUNK)
+            frames.append(data)
+
+        # for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        #     data = stream.read(CHUNK)
+        #     frames.append(data)
+
+        print("* END RECORDING *")
+
+    input("Press ENTER to START talking.")
 
     frames = []
 
-    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
-        frames.append(data)
-
-    print("* END RECORDING *")
+    recording = True
+    record_thread = threading.Thread(
+        name="record_service", target=record_service, args=(frames, ))
+    record_thread.start()
+    input("Press ENTER to STOP talking.")
+    recording = False
 
     stream.stop_stream()
     stream.close()
