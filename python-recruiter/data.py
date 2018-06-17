@@ -158,7 +158,7 @@ def match(subject_info):
 
     a3 = a2 * z2.T
 
-    def show_scores():
+    def display_scores():
         print("Match Scores: ")
         temp0 = 0
         for i in carreer_indeces:
@@ -166,4 +166,6 @@ def match(subject_info):
                 print("\t{:30}: {:.2%}".format(i, a3[0, temp0]))
                 temp0 = temp0 + 1
 
-    show_scores()
+    display_scores()
+
+    return a3
