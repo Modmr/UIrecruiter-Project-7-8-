@@ -60,4 +60,7 @@ typings/
 # Jupyter Notebook
 .ipynb_checkpoints/
 
+# Python
+__pycache__
+
 .DS_STORE
