@@ -14,12 +14,12 @@ def main():
     project_id = "recruitertest-dd3ab"
     session_id = str(uuid.uuid4())
     language_code = "en-US"
-    subject_input = "./resources/subject_input.wav"
+    input_file_path = "./resources/subject_input.wav"
 
     # [START DIALOG]
     complete_transcript = [[], []]
 
-    # [QUICK DIALOG - NO LOG]
+    # [QUICK DIALOG]
     # complete_transcript = detect_intent_texts(project_id, session_id, [
     #     "DEMO_START", "Diana Moon", "18", "Adaptable , ambitious, clever and blunt", "I have a bachelor in mathematics",
     #     "I have worked for Google as a data scientist of the past 3 years", "I am good at analysis and computers", "My communication is not great", "40 hours", "No"], language_code)
@@ -32,13 +32,13 @@ def main():
         # partial_transcript = detect_intent_texts(project_id, session_id, [
         #     text_input], language_code)
 
-        audio.record(subject_input)
+        audio.record(input_file_path)
         partial_transcript = detect_intent_audio(project_id, session_id,
-                                                 subject_input, language_code)
+                                                 input_file_path, language_code)
 
-        # audio.record(subject_input)
+        # audio.record(input_file_path)
         # partial_transcript = detect_intent_stream(project_id, session_id,
-        #                                           subject_input, language_code)
+        #                                           input_file_path, language_code)
 
         complete_transcript[0] = complete_transcript[0] + partial_transcript[0]
         complete_transcript[1] = complete_transcript[1] + partial_transcript[1]
@@ -88,14 +88,15 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
         dialog_transcript[0].append(response.query_result.query_text)
         dialog_transcript[1].append(response.query_result.fulfillment_text)
 
+        audio.text_to_speech(response.query_result.fulfillment_text)
+
     return dialog_transcript
 # [END dialogflow_detect_intent_text]
 
 # [START dialogflow_detect_intent_audio]
 
 
-def detect_intent_audio(project_id, session_id, audio_file_path,
-                        language_code):
+def detect_intent_audio(project_id, session_id, input_file_path, language_code):
     """Returns the result of detect intent with an audio file as input.
 
     Using the same `session_id` between requests allows continuation
@@ -110,7 +111,7 @@ def detect_intent_audio(project_id, session_id, audio_file_path,
     # print('Session path: {}\n'.format(session))
 
     dialog_transcript = [[], []]
-    with open(audio_file_path, 'rb') as audio_file:
+    with open(input_file_path, 'rb') as audio_file:
         input_audio = audio_file.read()
 
     audio_config = dialogflow.types.InputAudioConfig(
@@ -133,14 +134,15 @@ def detect_intent_audio(project_id, session_id, audio_file_path,
     dialog_transcript[0].append(response.query_result.query_text)
     dialog_transcript[1].append(response.query_result.fulfillment_text)
 
+    audio.text_to_speech(response.query_result.fulfillment_text)
+
     return dialog_transcript
 # [END dialogflow_detect_intent_audio]
 
 # [START dialogflow_detect_intent_streaming]
 
 
-def detect_intent_stream(project_id, session_id, audio_file_path,
-                         language_code):
+def detect_intent_stream(project_id, session_id, input_file_path, language_code):
     """Returns the result of detect intent with streaming audio as input.
 
     Using the same `session_id` between requests allows continuation
@@ -179,7 +181,7 @@ def detect_intent_stream(project_id, session_id, audio_file_path,
         audio_encoding=audio_encoding, language_code=language_code,
         sample_rate_hertz=sample_rate_hertz)
 
-    requests = request_generator(audio_config, audio_file_path)
+    requests = request_generator(audio_config, input_file_path)
     responses = session_client.streaming_detect_intent(requests)
 
     print('=' * 20)
@@ -201,6 +203,8 @@ def detect_intent_stream(project_id, session_id, audio_file_path,
 
     dialog_transcript[0].append(response.query_result.query_text)
     dialog_transcript[1].append(response.query_result.fulfillment_text)
+
+    audio.text_to_speech(response.query_result.fulfillment_text)
 
     return dialog_transcript
 # [END dialogflow_detect_intent_streaming]

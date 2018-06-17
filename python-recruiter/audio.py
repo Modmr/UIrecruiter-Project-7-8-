@@ -1,15 +1,17 @@
 import threading
 import pyaudio
+import pyttsx3
+import requests
 import wave
 
 
-def record(subject_input):
+def record(audio_file_path):
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = sample_rate()
     RECORD_SECONDS = 4
-    WAVE_OUTPUT_FILENAME = subject_input
+    WAVE_OUTPUT_FILENAME = audio_file_path
 
     p = pyaudio.PyAudio()
 
@@ -53,6 +55,42 @@ def record(subject_input):
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
+
+
+def text_to_speech(text_input, voice="en-US_AllisonVoice"):
+    CHUNK = 1048
+    WIDTH = 2
+    CHANNELS = 1
+    RATE = 22050
+    ACCEPT = 'audio/wav'
+    URL = "https://stream.watsonplatform.net/text-to-speech/api/"
+    USER = "3c8a8599-8ed9-4be0-b589-c58d8fe1efcb"
+    PASS = "Z2UqdCNxLUYc"
+
+    req = requests.get(URL + "/v1/synthesize", auth=(USER, PASS), params={
+        "text": text_input, "voice": voice, "accept": ACCEPT}, stream=True, verify=True)
+
+    p = pyaudio.PyAudio()
+
+    stream = p.open(format=p.get_format_from_width(WIDTH),
+                    channels=CHANNELS,
+                    rate=RATE,
+                    output=True)
+
+    bytes_read = 0
+    data_read = b''
+
+    for data in req.iter_content(1):
+        data_read = data_read + data
+        bytes_read = bytes_read + 1
+
+        if bytes_read % CHUNK == 0:
+            stream.write(data_read)
+            data_read = b''
+
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
 
 
 def sample_rate():
