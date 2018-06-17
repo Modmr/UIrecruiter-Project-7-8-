@@ -104,7 +104,7 @@ def detect_intent_audio(project_id, session_id, audio_file_path,
 
     # Note: hard coding audio_encoding and sample_rate_hertz for simplicity.
     audio_encoding = dialogflow.enums.AudioEncoding.AUDIO_ENCODING_LINEAR_16
-    sample_rate_hertz = 44100
+    sample_rate_hertz = audio.sample_rate()
 
     session = session_client.session_path(project_id, session_id)
     # print('Session path: {}\n'.format(session))
@@ -149,7 +149,7 @@ def detect_intent_stream(project_id, session_id, audio_file_path,
 
     # Note: hard coding audio_encoding and sample_rate_hertz for simplicity.
     audio_encoding = dialogflow.enums.AudioEncoding.AUDIO_ENCODING_LINEAR_16
-    sample_rate_hertz = 44100
+    sample_rate_hertz = audio.sample_rate()
 
     session = session_client.session_path(project_id, session_id)
     # print('Session path: {}\n'.format(session))

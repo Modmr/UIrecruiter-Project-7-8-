@@ -7,7 +7,7 @@ def record(subject_input):
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
-    RATE = 44100
+    RATE = sample_rate()
     RECORD_SECONDS = 4
     WAVE_OUTPUT_FILENAME = subject_input
 
@@ -23,7 +23,7 @@ def record(subject_input):
         print("* START RECORDING *")
 
         while recording:
-            data = stream.read(CHUNK, exception_on_overflow=False)
+            data = stream.read(CHUNK)
             frames.append(data)
 
         # for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
@@ -53,3 +53,11 @@ def record(subject_input):
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
+
+
+def sample_rate():
+    p = pyaudio.PyAudio()
+    sample_rate = p.get_device_info_by_index(0)["defaultSampleRate"]
+    p.terminate()
+
+    return int(sample_rate)
