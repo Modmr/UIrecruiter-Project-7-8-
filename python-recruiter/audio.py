@@ -23,7 +23,7 @@ def record(subject_input):
         print("* START RECORDING *")
 
         while recording:
-            data = stream.read(CHUNK)
+            data = stream.read(CHUNK, exception_on_overflow=False)
             frames.append(data)
 
         # for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
