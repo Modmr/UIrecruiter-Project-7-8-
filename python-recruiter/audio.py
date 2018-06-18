@@ -1,6 +1,5 @@
 import threading
 import pyaudio
-import pyttsx3
 import requests
 import wave
 
@@ -10,7 +9,7 @@ def record(audio_file_path):
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = sample_rate()
-    RECORD_SECONDS = 4
+    # RECORD_SECONDS = 4
     WAVE_OUTPUT_FILENAME = audio_file_path
 
     p = pyaudio.PyAudio()

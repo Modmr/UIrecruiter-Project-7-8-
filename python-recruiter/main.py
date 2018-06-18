@@ -5,20 +5,17 @@ import uuid
 
 import audio
 import data
-
-import fpdf
-from fpdf import FPDF
 import report
 # [END import_libraries]
 
 
 def main():
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials/e3682f457e02.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./resources/credentials/e3682f457e02.json"
     os.system("cls")
     project_id = "recruitertest-dd3ab"
     session_id = str(uuid.uuid4())
     language_code = "en-US"
-    input_file_path = "./resources/subject_input.wav"
+    input_file_path = "./resources/sound/subject_input.wav"
 
     # [START DIALOG]
     complete_transcript = [[], []]
@@ -55,11 +52,12 @@ def main():
     # [DATA]
     subject_info = get_subject_info(project_id, session_id, language_code)
 
-    data.display(subject_info)
-    data.match(subject_info)
-    #pdf code starts here
-    report.OutputPDF()
-    #pdf code ends here
+    # data.display(subject_info)
+    # data.match(subject_info)
+
+
+
+
 # [START dialogflow_detect_intent_text]
 
 

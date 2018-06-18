@@ -1,7 +1,6 @@
 import numpy
-import fpdf
-from fpdf import FPDF
 import report
+
 
 def clean(subject_info):
     result = {}
@@ -27,18 +26,15 @@ def display(subject_info):
                           "college-degree", "college-major", "position", "experience", "strengths", "weaknesses", "hours"]
 
     print("Subject Info: ")
-    report.WriteHeader("Subject Info")
     for parameter in subject_parameters:
         print("\t{:20}: {}".format(parameter, subject_info[parameter]))
-        # pdf code start
-        report.Write("\t{:20}: {}".format(parameter, subject_info[parameter]))
-        # pdf code end
+
 
 def match(subject_info):
-    subject_info=clean(subject_info)
+    subject_info = clean(subject_info)
 
     # References
-    degree_values={"None": 0.0, "Associate": 0.3,
+    degree_values = {"None": 0.0, "Associate": 0.3,
                      "Bachelor": 0.6, "Master": 1.0}
 
     major_indeces = {"None": 1, "Computer Science": 1, "Communications": 2, "Business": 3,
@@ -65,7 +61,7 @@ def match(subject_info):
     a1 = numpy.insert(a1, 0, 1)
     if subject_info["college-major"] != "None":
         a1[major_indeces[subject_info["college-major"]]
-            ] = degree_values[subject_info["college-degree"]]
+           ] = degree_values[subject_info["college-degree"]]
     if subject_info["position"] != "None":
         a1[major_count + carreer_indeces[subject_info["position"]]
            ] = sigmoid(0.8 * subject_info["experience"] - 2)
@@ -165,17 +161,10 @@ def match(subject_info):
 
     def display_scores():
         print("Match Scores: ")
-        #PDF Code start
-        report.AddPage()
-        report.WriteHeader("Match Scores")
-        #Pdf Code end
         temp0 = 0
         for i in carreer_indeces:
             if i != "None":
                 print("\t{:30}: {:.2%}".format(i, a3[0, temp0]))
-                # PDF code starts here
-                report.Write("\t{:30}: {:.2%}".format(i, a3[0, temp0]))
-                # PDF code ends here
                 temp0 = temp0 + 1
 
     display_scores()
