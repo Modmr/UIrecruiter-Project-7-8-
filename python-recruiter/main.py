@@ -5,6 +5,10 @@ import uuid
 
 import audio
 import data
+
+import fpdf
+from fpdf import FPDF
+import report
 # [END import_libraries]
 
 
@@ -53,7 +57,9 @@ def main():
 
     data.display(subject_info)
     data.match(subject_info)
-
+    #pdf code starts here
+    report.OutputPDF()
+    #pdf code ends here
 # [START dialogflow_detect_intent_text]
 
 

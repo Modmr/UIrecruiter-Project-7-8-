@@ -1,5 +1,7 @@
 import numpy
-
+import fpdf
+from fpdf import FPDF
+import report
 
 def clean(subject_info):
     result = {}
@@ -25,9 +27,12 @@ def display(subject_info):
                           "college-degree", "college-major", "position", "experience", "strengths", "weaknesses", "hours"]
 
     print("Subject Info: ")
+    report.WriteHeader("Subject Info")
     for parameter in subject_parameters:
         print("\t{:20}: {}".format(parameter, subject_info[parameter]))
-
+        # pdf code start
+        report.Write("\t{:20}: {}".format(parameter, subject_info[parameter]))
+        # pdf code end
 
 def match(subject_info):
     subject_info=clean(subject_info)
@@ -160,10 +165,17 @@ def match(subject_info):
 
     def display_scores():
         print("Match Scores: ")
+        #PDF Code start
+        report.AddPage()
+        report.WriteHeader("Match Scores")
+        #Pdf Code end
         temp0 = 0
         for i in carreer_indeces:
             if i != "None":
                 print("\t{:30}: {:.2%}".format(i, a3[0, temp0]))
+                # PDF code starts here
+                report.Write("\t{:30}: {:.2%}".format(i, a3[0, temp0]))
+                # PDF code ends here
                 temp0 = temp0 + 1
 
     display_scores()
