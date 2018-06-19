@@ -1,94 +1,142 @@
 from fpdf import FPDF
 
-# A4 = 210mm x 297mm
-# pdf = FPDF("P", "mm", "A4")
 
-# pdf.add_font("Montserrat", "",
-#              "./resources/fonts/Montserrat/Montserrat-Regular.ttf", uni=True)
-# pdf.add_font("Montserrat", "B",
-#              "./resources/fonts/Montserrat/Montserrat-Bold.ttf", uni=True)
-# pdf.add_font("Montserrat", "I",
-#              "./resources/fonts/Montserrat/Montserrat-Italic.ttf", uni=True)
-# pdf.add_font("Montserrat", "BI",
-#              "./resources/fonts/Montserrat/Montserrat-BoldItalic.ttf", uni=True)
-# pdf.add_font("Merriweather", "",
-#              "./resources/fonts/Merriweather/Merriweather-Regular.ttf", uni=True)
-# pdf.add_font("Merriweather", "B",
-#              "./resources/fonts/Merriweather/Merriweather-Bold.ttf", uni=True)
-# pdf.add_font("Merriweather", "I",
-#              "./resources/fonts/Merriweather/Merriweather-Italic.ttf", uni=True)
-# pdf.add_font("Merriweather", "BI",
-#              "./resources/fonts/Merriweather/Merriweather-BoldItalic.ttf", uni=True)
+def create(subject_info, match_scores, transcript, session_id):
+    class PDF(FPDF):
+        def header(self):
+            self.title_style(title)
+            self.subtitle_style(subtitle)
 
-# pdf.add_page()
+            self.line(3)
 
-# pdf.set_font("Montserrat", "B", 16)
-# pdf.cell(210, 10, "Hello World!", align="C")
+        def footer(self):
+            self.set_y(-15)
+            self.set_font("Merriweather", "", 10)
+            self.set_text_color(102, 103, 100)
+            self.cell(0, 10, str(self.page_no()), 0, 0, "C")
 
-# pdf.output("./resources/reports/report.pdf", "F")
+        def add_subject_info(self, subject_info, session_id):
+            subject_parameters = ["First Name", "Last Name", "Age", "Positive Traits", "Neutral Traits", "Negative Traits",
+                                  "College Degree", "College Major", "Position", "Experience (years)", "Strengths", "Weaknesses", "Availablity (hours a week)"]
 
-# title = '20000 Leagues Under the Seas'
+            self.h1("Subject \"{}\" Info".format(session_id))
 
-# class PDF(FPDF):
-#     def header(self):
-#         # Arial bold 15
-#         self.set_font('Arial', 'B', 15)
-#         # Calculate width of title and position
-#         w = self.get_string_width(title) + 6
-#         self.set_x((210 - w) / 2)
-#         # Colors of frame, background and text
-#         self.set_draw_color(0, 80, 180)
-#         self.set_fill_color(230, 230, 0)
-#         self.set_text_color(220, 50, 50)
-#         # Thickness of frame (1 mm)
-#         self.set_line_width(1)
-#         # Title
-#         self.cell(w, 9, title, 1, 1, 'C', 1)
-#         # Line break
-#         self.ln(10)
+            index = 0
+            for info in subject_info.values():
+                self.strong("{}: ".format(subject_parameters[index]), 60, 0)
+                self.p(str(info).strip("[]").replace("'", ""), 0, 1)
+                self.ln(2)
 
-#     def footer(self):
-#         # Position at 1.5 cm from bottom
-#         self.set_y(-15)
-#         # Arial italic 8
-#         self.set_font('Arial', 'I', 8)
-#         # Text color in gray
-#         self.set_text_color(128)
-#         # Page number
-#         self.cell(0, 10, 'Page ' + str(self.page_no()), 0, 0, 'C')
+                index = index + 1
 
-#     def chapter_title(self, num, label):
-#         # Arial 12
-#         self.set_font('Arial', '', 12)
-#         # Background color
-#         self.set_fill_color(200, 220, 255)
-#         # Title
-#         self.cell(0, 6, 'Chapter %d : %s' % (num, label), 0, 1, 'L', 1)
-#         # Line break
-#         self.ln(4)
+        def add_match_scores(self, match_scores):
+            positions = ["Junior Software Engineer", "Software Engineer", "Data Analyst", "Data Scientist",
+                         "Social Media Manager", "Sales Representative", "Human Resources Specialist",
+                         "IT Consultant", "Management Consultant", "Business Adviser",
+                         "Project Manager", "Risk Manager", "Statistician",
+                         "Accountant", "Digital Copywriter", "Writer",
+                         "Web Content Manager", "Therapist", "Market Researcher",
+                         "Network Engineer", "Design Engineer", "Advertising"]
 
-#     def chapter_body(self, name):
-#         # Read text file
-#         with open(name, 'rb') as fh:
-#             txt = fh.read().decode('latin-1')
-#         # Times 12
-#         self.set_font('Times', '', 12)
-#         # Output justified text
-#         self.multi_cell(0, 5, txt)
-#         # Line break
-#         self.ln()
-#         # Mention in italics
-#         self.set_font('', 'I')
-#         self.cell(0, 5, '(end of excerpt)')
+            self.ln(10)
+            self.h1("Match Scores")
 
-#     def print_chapter(self, num, title, name):
-#         self.add_page()
-#         self.chapter_title(num, title)
-#         self.chapter_body(name)
+            index = 0
+            for score in match_scores:
+                self.strong("{}: ".format(positions[index]), 60, 0)
+                self.p("{:.2%}".format(score), 32, index % 2)
 
-# pdf = PDF()
-# pdf.set_title(title)
-# pdf.set_author('Jules Verne')
-# pdf.print_chapter(1, 'A RUNAWAY REEF', '20k_c1.txt')
-# pdf.print_chapter(2, 'THE PROS AND CONS', '20k_c2.txt')
-# pdf.output("./resources/reports/report.pdf", "F")
+                if index % 2:
+                    self.ln(2)
+
+                index = index + 1
+
+        def add_transcript(self, transcript, subject_name, recruiter_name="Recruiter Diana"):
+            self.add_page()
+            self.h1("Transcript")
+
+            index = 0
+            for i in range(len(transcript[0])):
+                self.strong("{}: ".format(subject_name), 32, 0)
+                self.ps(transcript[0][i], 0)
+                self.ln(5)
+                self.strong("{}: ".format(recruiter_name), 32, 0)
+                self.ps(transcript[1][i], 0)
+                self.ln(5)
+
+                index = index + 1
+
+        def line(self, width=1, margin=5):
+            self.set_line_width(0.1)
+            self.ln(5)
+            for i in range(width):
+                self.cell(0, 0.1, "", 1, 1, "C", 0)
+            self.ln(5)
+            self.set_line_width(0.2)
+
+        def title_style(self, text_input, pos=1, border=0):
+            self.set_font("Merriweather", "B", 36)
+            self.set_text_color(0, 0, 0)
+            self.cell(0, 18, text_input, border, pos, "C", 0)
+
+        def subtitle_style(self, text_input, pos=1, border=0):
+            self.set_font("Montserrat", "", 11)
+            self.set_text_color(102, 103, 100)
+            self.cell(0, 5, text_input, border, pos, "C", 0)
+
+        def h1(self, text_input, pos=1, border=0):
+            self.set_font("Montserrat", "B", 12)
+            self.set_text_color(102, 217, 239)
+            self.cell(0, 5, text_input.upper(), border, pos, "L", 0)
+            self.ln(3)
+
+        def p(self, text_input, width=0, pos=0, border=0):
+            self.set_font("Merriweather", "", 10)
+            self.set_text_color(102, 103, 100)
+            self.cell(width, 4, text_input, border, pos, "L", 0)
+
+        def ps(self, text_input, width=0, border=0):
+            self.set_font("Merriweather", "", 10)
+            self.set_text_color(102, 103, 100)
+            self.multi_cell(width, 4, text_input, border, "L", 0)
+
+        def strong(self, text_input, width=0, pos=0, border=0):
+            self.set_font("Merriweather", "B", 10)
+            self.set_text_color(102, 103, 100)
+            self.cell(width, 4, text_input, border, pos, "L", 0)
+
+    pdf = PDF()
+    pdf.set_margins(13, 16, 13)
+
+    pdf.add_font("Montserrat", "",
+                 "./resources/fonts/Montserrat/Montserrat-Regular.ttf", uni=True)
+    pdf.add_font("Montserrat", "B",
+                 "./resources/fonts/Montserrat/Montserrat-Bold.ttf", uni=True)
+    pdf.add_font("Montserrat", "I",
+                 "./resources/fonts/Montserrat/Montserrat-Italic.ttf", uni=True)
+    pdf.add_font("Montserrat", "BI",
+                 "./resources/fonts/Montserrat/Montserrat-BoldItalic.ttf", uni=True)
+    pdf.add_font("Merriweather", "",
+                 "./resources/fonts/Merriweather/Merriweather-Regular.ttf", uni=True)
+    pdf.add_font("Merriweather", "B",
+                 "./resources/fonts/Merriweather/Merriweather-Bold.ttf", uni=True)
+    pdf.add_font("Merriweather", "I",
+                 "./resources/fonts/Merriweather/Merriweather-Italic.ttf", uni=True)
+    pdf.add_font("Merriweather", "BI",
+                 "./resources/fonts/Merriweather/Merriweather-BoldItalic.ttf", uni=True)
+
+    title = "Interview Report"
+    subtitle = "Project 7/8: Automated Screening Interview"
+
+    pdf.set_title("Interview report")
+    pdf.set_author(
+        "Osman Altun, Muhammet Demir, Endy Hu, Muhammed Incekara, Mahmut Ozler, Satrya Sabeni")
+
+    pdf.add_page()
+    pdf.add_subject_info(subject_info, session_id)
+    pdf.add_match_scores(match_scores)
+    pdf.add_transcript(transcript, "{} {}".format(
+        subject_info["given-name"], subject_info["last-name"]))
+
+    pdf.output("./resources/reports/report-{}.pdf".format(session_id), "F")
+    print("Interview Report created in ./resources/reports/report-{}.pdf".format(session_id))

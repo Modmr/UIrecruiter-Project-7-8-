@@ -40,16 +40,16 @@ def match(subject_info):
     major_indeces = {"None": 1, "Computer Science": 1, "Communications": 2, "Business": 3,
                      "Economics": 4, "English": 5, "Psychology": 6,
                      "Electrical Engineering": 7, "Mathematics": 8, "Marketing": 9}
-    carreer_indeces = {"None": 1, "Junior Software Engineer": 1, "Software Engineer": 2, "Data Analyst": 3, "Data Scientist": 4,
-                       "Social Media Manager": 5, "Sales Representative": 6, "Human Resources Specialist": 7,
-                       "IT Consultant": 8, "Management Consultant": 9, "Business Adviser": 10,
-                       "Project Manager": 11, "Risk Manager": 12, "Statistician": 13,
-                       "Accountant": 14, "Digital Copywriter": 15, "Writer": 16,
-                       "Web Content Manager": 17, "Therapist": 18, "Market Researcher": 19,
-                       "Network Engineer": 20, "Design Engineer": 21, "Advertising": 22}
+    position_indeces = {"None": 1, "Junior Software Engineer": 1, "Software Engineer": 2, "Data Analyst": 3, "Data Scientist": 4,
+                        "Social Media Manager": 5, "Sales Representative": 6, "Human Resources Specialist": 7,
+                        "IT Consultant": 8, "Management Consultant": 9, "Business Adviser": 10,
+                        "Project Manager": 11, "Risk Manager": 12, "Statistician": 13,
+                        "Accountant": 14, "Digital Copywriter": 15, "Writer": 16,
+                        "Web Content Manager": 17, "Therapist": 18, "Market Researcher": 19,
+                        "Network Engineer": 20, "Design Engineer": 21, "Advertising": 22}
 
     major_count = len(major_indeces) - 1
-    carreer_count = len(carreer_indeces) - 1
+    position_count = len(position_indeces) - 1
 
     rates = [0.2, 0.8]
 
@@ -57,13 +57,13 @@ def match(subject_info):
         return 1 / (1 + numpy.exp(-x))
 
     # Algorithm
-    a1 = numpy.zeros(major_count + carreer_count)
+    a1 = numpy.zeros(major_count + position_count)
     a1 = numpy.insert(a1, 0, 1)
     if subject_info["college-major"] != "None":
         a1[major_indeces[subject_info["college-major"]]
            ] = degree_values[subject_info["college-degree"]]
     if subject_info["position"] != "None":
-        a1[major_count + carreer_indeces[subject_info["position"]]
+        a1[major_count + position_indeces[subject_info["position"]]
            ] = sigmoid(0.8 * subject_info["experience"] - 2)
     z1 = numpy.matrix([
         [-5, 9.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
@@ -162,11 +162,11 @@ def match(subject_info):
     def display_scores():
         print("Match Scores: ")
         temp0 = 0
-        for i in carreer_indeces:
+        for i in position_indeces:
             if i != "None":
                 print("\t{:30}: {:.2%}".format(i, a3[0, temp0]))
                 temp0 = temp0 + 1
 
-    display_scores()
+    # display_scores()
 
-    return a3
+    return a3.A1

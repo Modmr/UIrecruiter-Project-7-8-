@@ -13,9 +13,9 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./resources/credentials/e3682f457e02.json"
     os.system("cls")
     project_id = "recruitertest-dd3ab"
-    session_id = str(uuid.uuid4())
+    session_id = str(uuid.uuid4().hex[:12])
     language_code = "en-US"
-    input_file_path = "./resources/sound/subject_input.wav"
+    input_file_path = "./resources/audio/subject_input.wav"
 
     # [START DIALOG]
     complete_transcript = [[], []]
@@ -51,11 +51,11 @@ def main():
 
     # [DATA]
     subject_info = get_subject_info(project_id, session_id, language_code)
+    clean_subject_info = data.clean(subject_info)
+    match_scores = data.match(subject_info)
 
-    # data.display(subject_info)
-    # data.match(subject_info)
-
-
+    report.create(clean_subject_info, match_scores,
+                  complete_transcript, session_id)
 
 
 # [START dialogflow_detect_intent_text]
