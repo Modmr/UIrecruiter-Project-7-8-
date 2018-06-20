@@ -63,8 +63,8 @@ def text_to_speech(text_input, voice="en-US_AllisonVoice"):
     RATE = 22050
     ACCEPT = 'audio/wav'
     URL = "https://stream.watsonplatform.net/text-to-speech/api/"
-    USER = "3c8a8599-8ed9-4be0-b589-c58d8fe1efcb"
-    PASS = "Z2UqdCNxLUYc"
+    USER = "82c893a4-4ff8-41d1-9c53-42123723d6aa"
+    PASS = "yqrObzqShtQo"
 
     req = requests.get(URL + "/v1/synthesize", auth=(USER, PASS), params={
         "text": text_input, "voice": voice, "accept": ACCEPT}, stream=True, verify=True)
